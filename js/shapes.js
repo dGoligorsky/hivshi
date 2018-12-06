@@ -6,7 +6,7 @@
 // const Engine = Matter.Engine
 // const Render = Matter.Render
 // deconstructing the aliases
-const {Engine, Render} = Matter
+const {Engine, Render, Bodies, World} = Matter
 
 
 // where is matter being deployed
@@ -28,6 +28,28 @@ const renderer = Render.create({
     }
 })
 
+// have the ability to create a shape on the page
+const createShape = function(x,y) {
+    return Bodies.circle(x, y, 20 + 20 * Math.random(), {
+        render: {
+            fillStyle: "red"
+        }
+    })
+}
+
+const bigBall = Bodies.circle(w / 2, h / 2, 250, {
+        isStatic: true,
+        render: {
+            fillStyle: "#ffffff"
+        }
+})
+World.add(engine.world, bigBall)
+
+// when we click, add a new shape
+document.addEventListener("click", function(event) {
+    const shape = createShape(event.pageX, event.pageY)
+    World.add(engine.world, shape)
+})
 
 // run both the engine and the renderer
 
